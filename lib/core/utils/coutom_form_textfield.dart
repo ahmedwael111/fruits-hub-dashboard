@@ -10,7 +10,7 @@ class CoustomFormTextfield extends StatelessWidget {
     this.suffixIcon,
     this.onSaved,
     this.obscureText = false,
-    this.maxLines ,
+    this.maxLines,
   });
   final String? hintText;
   final TextInputType keyboardType;
@@ -21,12 +21,12 @@ class CoustomFormTextfield extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      maxLines:  maxLines ?? 1,
+      maxLines: maxLines ?? 1,
       obscureText: obscureText,
       onSaved: onSaved,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'يجب إدخال هذا الحقل';
+          return 'This field is required';
         }
         return null;
       },
