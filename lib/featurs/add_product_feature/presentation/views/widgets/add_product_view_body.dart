@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruits_hub_dashboard/core/utils/coustm_bottom.dart';
 import 'package:fruits_hub_dashboard/core/utils/coutom_form_textfield.dart';
-import 'package:fruits_hub_dashboard/featurs/add_product_feature/domin/entities/add_product_entity.dart';
+import 'package:fruits_hub_dashboard/core/utils/show_snake_bar.dart';
+import 'package:fruits_hub_dashboard/featurs/add_product_feature/domin/entities/product_entity.dart';
+import 'package:fruits_hub_dashboard/featurs/add_product_feature/presentation/manager/cubit/add_product_cubit.dart';
 import 'package:fruits_hub_dashboard/featurs/add_product_feature/presentation/views/widgets/image_field.dart';
 import 'package:fruits_hub_dashboard/featurs/add_product_feature/presentation/views/widgets/is_item_featured_widget.dart';
 import 'package:fruits_hub_dashboard/featurs/add_product_feature/presentation/views/widgets/is_organic_box.dart';
@@ -16,10 +19,10 @@ class AddProductViewBody extends StatefulWidget {
 }
 
 late String name, code, description;
-late num price ;
+late num price;
 late int unitAmount, expirationMonth, numberOfCalorys;
 File? imageFile;
-bool isFeatured = false , isOrganic = false;
+late bool isFeatured, isOrganic;
 
 class _AddProductViewBodyState extends State<AddProductViewBody> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -62,7 +65,7 @@ class _AddProductViewBodyState extends State<AddProductViewBody> {
               SizedBox(height: 12),
               CoustomFormTextfield(
                 hintText: 'number Of Calorys',
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.number,
                 onSaved: (newValue) {
                   numberOfCalorys = int.parse(newValue!);
                 },
@@ -70,7 +73,7 @@ class _AddProductViewBodyState extends State<AddProductViewBody> {
               SizedBox(height: 12),
               CoustomFormTextfield(
                 hintText: 'Expiration Month',
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.number,
                 onSaved: (newValue) {
                   expirationMonth = int.parse(newValue!);
                 },
@@ -78,7 +81,7 @@ class _AddProductViewBodyState extends State<AddProductViewBody> {
               SizedBox(height: 12),
               CoustomFormTextfield(
                 hintText: 'unit count',
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.number,
                 onSaved: (newValue) {
                   unitAmount = int.parse(newValue!);
                 },
@@ -116,25 +119,30 @@ class _AddProductViewBodyState extends State<AddProductViewBody> {
                   if (imageFile != null) {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
-                      showSnakeBar(context, 'adding Data');
+
                       // logic to add product
-                      AddProductEntity addProductEntity = AddProductEntity(
+                      ProductEntity product = ProductEntity(
                         name: name,
+                        code: code,
                         description: description,
                         price: price,
-                        code: code,
+                        unitAmount: unitAmount,
+                        expirationMonth: expirationMonth,
+                        numberOfCalorys: numberOfCalorys,
+                        imageFile: imageFile!,
                         isFeatured: isFeatured,
-                        isOrganic: isOrganic ,
-                        imageFile: imageFile!, expirationMonth: expirationMonth, numberOfCalorys: numberOfCalorys, unitAmount: unitAmount,
+                        isOrganic: isOrganic,
                       );
-                      
+                      BlocProvider.of<AddProductCubit>(
+                        context,
+                      ).addProduct(product);
                     } else {
                       setState(() {
                         autovalidateMode = AutovalidateMode.always;
                       });
                     }
                   } else {
-                    showSnakeBar(context, 'Please select an image');
+                    showSnakeBar(context, 'Please select an image', Colors.red);
                     return;
                   }
                 },
@@ -146,9 +154,5 @@ class _AddProductViewBodyState extends State<AddProductViewBody> {
         ),
       ),
     );
-  }
-
-  void showSnakeBar(BuildContext context, String s) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(s)));
   }
 }

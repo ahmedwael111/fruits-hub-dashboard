@@ -9,7 +9,7 @@ class CoustomCheckbox extends StatefulWidget {
 }
 
 class _CoustomCheckboxState extends State<CoustomCheckbox> {
-  late bool isChecked = false;
+  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {

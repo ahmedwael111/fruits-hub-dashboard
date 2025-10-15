@@ -6,6 +6,16 @@ class HomeView extends StatelessWidget {
   static const routeName = '/home';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: HomeViewBody());
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Fruits Hub Dashboard',
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+      ),
+      body: HomeViewBody(),
+    );
   }
 }

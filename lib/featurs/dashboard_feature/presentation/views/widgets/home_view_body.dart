@@ -14,6 +14,7 @@ class HomeViewBody extends StatelessWidget {
         children: [
           CoustomBottom(
             onPressed: () {
+              
               Navigator.pushNamed(context, AddProductView.routeName);
             },
             text: 'Add Product',

@@ -2,23 +2,23 @@ import 'dart:io';
 
 import 'package:fruits_hub_dashboard/featurs/add_product_feature/domin/entities/review_entity.dart';
 
-class AddProductEntity {
+class ProductEntity {
   final String name;
   final String description;
   final num price;
   final String code;
   final bool isFeatured;
   final File imageFile;
-  final String? imageUrl;
+  String? imageUrl;
   final num expirationMonth;
-  final bool isOrganic ;
+  final bool isOrganic;
   final int numberOfCalorys;
   final num avrageRate = 0;
   final num ratingCount = 0;
   final int unitAmount;
-  final List<ReviewEntity> reviews ;
+  final List<ReviewEntity> reviews;
 
-  AddProductEntity({
+  ProductEntity({
     required this.name,
     required this.description,
     required this.price,
@@ -26,7 +26,7 @@ class AddProductEntity {
     required this.isFeatured,
     required this.imageFile,
     this.imageUrl,
-     this.isOrganic = false,
+    required this.isOrganic ,
     required this.expirationMonth,
     required this.numberOfCalorys,
     required this.unitAmount,
