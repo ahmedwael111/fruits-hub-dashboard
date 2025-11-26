@@ -17,6 +17,7 @@ class ProductModel {
   final num avrageRate = 0;
   final num ratingCount = 0;
   final int unitAmount;
+  final int sellingCount;
   final List<ReviewModel> reviews;
 
   ProductModel({
@@ -31,6 +32,7 @@ class ProductModel {
     required this.expirationMonth,
     required this.numberOfCalorys,
     required this.unitAmount,
+    this.sellingCount = 0,
     this.reviews = const [],
   });
   factory ProductModel.fromEntity(ProductEntity entity) {
@@ -66,6 +68,7 @@ class ProductModel {
       'unitAmount': unitAmount,
       'avrageRate': avrageRate,
       'ratingCount': ratingCount,
+      'sellingCount': sellingCount,
       'reviews': reviews.map((e) => e.toMap()).toList(),
     };
   }

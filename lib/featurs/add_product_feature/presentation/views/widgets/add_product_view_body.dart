@@ -22,7 +22,7 @@ late String name, code, description;
 late num price;
 late int unitAmount, expirationMonth, numberOfCalorys;
 File? imageFile;
-late bool isFeatured, isOrganic;
+bool? isFeatured, isOrganic;
 
 class _AddProductViewBodyState extends State<AddProductViewBody> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -130,8 +130,8 @@ class _AddProductViewBodyState extends State<AddProductViewBody> {
                         expirationMonth: expirationMonth,
                         numberOfCalorys: numberOfCalorys,
                         imageFile: imageFile!,
-                        isFeatured: isFeatured,
-                        isOrganic: isOrganic,
+                        isFeatured: isFeatured ?? false,
+                        isOrganic: isOrganic ?? false,
                       );
                       BlocProvider.of<AddProductCubit>(
                         context,
